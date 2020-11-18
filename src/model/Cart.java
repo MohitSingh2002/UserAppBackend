@@ -34,17 +34,19 @@ public class Cart {
     public int removeVarientBasedProductFromCart(Product product, Varient varient) {
         
         String key = product.name + " " + varient.name;
-        noOfItems--;
-        totalPrice -= map.get(key).price;
-        map.get(key).quantity--;
-        if (map.get(key).quantity == 0) {
-            map.remove(key);
-        }
+        if (map.containsKey(key)) {
+            noOfItems--;
+            totalPrice -= map.get(key).price;
+            map.get(key).quantity--;
+            if (map.get(key).quantity == 0) {
+                map.remove(key);
+            }
 
-        int quantity = totalItemMap.get(product.name) - 1;
-        totalItemMap.put(product.name, quantity);
-        if (totalItemMap.get(product.name) == 0) {
-            totalItemMap.remove(product.name);
+            int quantity = totalItemMap.get(product.name) - 1;
+            totalItemMap.put(product.name, quantity);
+            if (totalItemMap.get(product.name) == 0) {
+                totalItemMap.remove(product.name);
+            }
         }
 
         return map.containsKey(key) ? (int) map.get(key).quantity : 0;
